@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">FastSelection</string>
+
+    <string-array name="cities">
+        <item>北京</item>
+        <item>上海</item>
+        <item>广州</item>
+        <item>广州</item>
+        <item>深圳</item>
+        <item>天津</item>
+        <item>杭州</item>
+        <item>南京</item>
+        <item>重庆</item>
+        <item>济南</item>
+        <item>青岛</item>
+        <item>大连</item>
+        <item>宁波</item>
+        <item>厦门</item>
+        <item>成都</item>
+        <item>武汉</item>
+        <item>哈尔滨</item>
+        <item>沈阳</item>
+        <item>西安</item>
+        <item>长春</item>
+        <item>长沙</item>
+        <item>福州</item>
+        <item>郑州</item>
+        <item>石家庄</item>
+        <item>苏州</item>
+        <item>佛山</item>
+        <item>东莞</item>
+        <item>无锡</item>
+        <item>烟台</item>
+        <item>合肥</item>
+        <item>南昌</item>
+        <item>南宁</item>
+        <item>昆明</item>
+        <item>温州</item>
+        <item>唐山</item>
+        <item>乌鲁木齐</item>
+        <item>贵阳</item>
+
+        <item>海口</item>
+        <item>兰州</item>
+        <item>银川</item>
+        <item>西宁</item>
+        <item>呼和浩特</item>
+        <item>泉州</item>
+        <item>包头</item>
+        <item>南通</item>
+
+        <item>大庆</item>
+        <item>徐州</item>
+        <item>潍坊</item>
+        <item>常州</item>
+        <item>鄂尔多斯</item>
+        <item>绍兴</item>
+        <item>济宁</item>
+        <item>盐城</item>
+        <item>邯郸</item>
+
+        <item>临沂</item>
+        <item>洛阳</item>
+        <item>东营</item>
+        <item>扬州</item>
+        <item>常州</item>
+        <item>台州</item>
+        <item>嘉兴</item>
+
+        <item>沧州</item>
+        <item>榆林</item>
+        <item>泰州</item>
+        <item>镇江</item>
+        <item>昆山</item>
+        <item>江阴</item>
+        <item>张家港</item>
+
+        <item>义乌</item>
+        <item>金华</item>
+        <item>保定</item>
+        <item>吉林</item>
+        <item>鞍山</item>
+        <item>泰安</item>
+        <item>宜昌</item>
+
+        <item>襄阳</item>
+        <item>中山</item>
+        <item>惠州</item>
+        <item>南阳</item>
+        <item>威海</item>
+        <item>德州</item>
+        <item>岳阳</item>
+
+        <item>聊城</item>
+        <item>常德</item>
+        <item>漳州</item>
+        <item>滨州</item>
+        <item>茂名</item>
+        <item>淮安</item>
+        <item>江门</item>
+
+        <item>芜湖</item>
+        <item>湛江</item>
+        <item>廊坊</item>
+        <item>菏泽</item>
+        <item>柳州</item>
+        <item>宝鸡</item>
+        <item>珠海</item>
+        <item>绵阳</item>
+    </string-array>
+
+</resources>
