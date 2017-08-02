@@ -11,6 +11,7 @@ import android.view.View;
 import java.util.List;
 
 import lib.sticky.bean.FullWordEntity;
+import lib.sticky.spell.IWord2Spell;
 
 
 /**
@@ -18,7 +19,7 @@ import lib.sticky.bean.FullWordEntity;
  *
  */
 
-public class StickyTitleDecoration extends RecyclerView.ItemDecoration{
+public class StickyTitleDecoration<T extends IWord2Spell> extends RecyclerView.ItemDecoration{
 
     private String TAG = "StickyTitleDecoration";
     private int INVALID_POSITION = -1;

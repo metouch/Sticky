@@ -1,14 +1,10 @@
 package lib.sticky.spell;
 
-import java.util.Map;
-
 /**
- * Created by me_touch on 2017/6/15.
+ * Created by me_touch on 2017/8/2.
  *
  */
 
 public interface IWord2Spell {
-
-    String word2spell(final Map<String, String[]> dict, String word);
-    String word2spell(String word);
+    String word2spell();
 }

@@ -11,6 +11,7 @@ import java.util.List;
 
 import lib.sticky.analysier.DataContainer;
 import lib.sticky.bean.FullWordEntity;
+import lib.sticky.spell.IWord2Spell;
 
 
 /**
@@ -18,17 +19,17 @@ import lib.sticky.bean.FullWordEntity;
  *
  */
 
-public abstract class HeaderAdapter extends RecyclerView.Adapter {
+public abstract class HeaderAdapter<T extends IWord2Spell> extends RecyclerView.Adapter {
 
     private LayoutInflater mInflater;
-    private DataContainer container;
-    protected List<FullWordEntity> mSet;
+    private DataContainer<T> container;
+    protected List<FullWordEntity<T>> mSet;
     private SparseArray<View> headers = new SparseArray<>();
 
     private int headerStart = Integer.MIN_VALUE;
 
 
-    public HeaderAdapter(Context context, DataContainer container){
+    public HeaderAdapter(Context context, DataContainer<T> container){
         this.mInflater = LayoutInflater.from(context);
         mSet = container.getDecorationSet();
         this.container = container;
