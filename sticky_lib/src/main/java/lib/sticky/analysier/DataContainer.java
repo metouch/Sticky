@@ -1,18 +1,16 @@
-package th.selection.analysier;
+package lib.sticky.analysier;
 
 import android.support.annotation.NonNull;
-
-import com.github.promeg.pinyinhelper.Pinyin;
-import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import th.selection.bean.FullWordEntity;
-import th.selection.bean.IndexBean;
-import th.selection.spell.Word2SpellIMPL;
+import lib.sticky.bean.FullWordEntity;
+import lib.sticky.bean.IndexBean;
+import lib.sticky.spell.Word2SpellIMPL;
+
 
 /**
  * Created by me_touch on 2017/7/18.
@@ -44,35 +42,9 @@ public class DataContainer {
         this.impl = Word2SpellIMPL.getInstance();
     }
 
-    public DataContainer(final Map<String, String[]> dict, @NonNull List<String> words){
-        this();
-        impl.addDict(dict);
-        addData(words);
-    }
-
     public DataContainer(@NonNull List<String> words) {
         this();
         addData(words);
-//        for (int i = 0; i < words.size(); i++) {
-//            String word = words.get(i);
-//            String spell = impl.word2spell(word);
-//            FullWordEntity entity = new FullWordEntity(spell);
-//            entity.setWord(word);
-//            decorationSet.add(entity);
-//        }
-//        Collections.sort(decorationSet);
-//        for (int j = 0; j < decorationSet.size(); j++) {
-//            FullWordEntity entity = decorationSet.get(j);
-//            entity.setDifferentWithLast(j < 1 || !entity.firstSpell.equals(decorationSet.get(j - 1).firstSpell));
-//            if (j == 0) {
-//                indexSet.add(new IndexBean(decorationSet.get(j).firstSpell, 0));
-//            } else {
-//                String spell1 = decorationSet.get(j).firstSpell;
-//                String spell2 = indexSet.get(indexSet.size() - 1).firstSpell;
-//                if (!spell1.equals(spell2))
-//                    indexSet.add(new IndexBean(spell1, j));
-//            }
-//        }
     }
 
 

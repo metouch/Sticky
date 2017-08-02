@@ -1,4 +1,4 @@
-package th.selection.bean;
+package lib.sticky.bean;
 
 /**
  * Created by me_touch on 2017/6/15.

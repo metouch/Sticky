@@ -1,30 +1,28 @@
-package th.selection.adapter;
+package lib.sticky.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
-import th.selection.R;
-import th.selection.analysier.DataContainer;
-import th.selection.bean.FullWordEntity;
+import lib.sticky.analysier.DataContainer;
+import lib.sticky.bean.FullWordEntity;
+
 
 /**
  * Created by me_touch on 2017/6/14.
  *
  */
 
-public class HeaderAdapter extends RecyclerView.Adapter {
+public abstract class HeaderAdapter extends RecyclerView.Adapter {
 
     private LayoutInflater mInflater;
     private DataContainer container;
-    private List<FullWordEntity> mSet;
+    protected List<FullWordEntity> mSet;
     private SparseArray<View> headers = new SparseArray<>();
 
     private int headerStart = Integer.MIN_VALUE;
@@ -36,7 +34,7 @@ public class HeaderAdapter extends RecyclerView.Adapter {
         this.container = container;
     }
 
-    public void addHeaderView(View view){
+    private void addHeaderView(View view){
         headers.put(headerStart, view);
         headerStart++;
     }
@@ -56,8 +54,10 @@ public class HeaderAdapter extends RecyclerView.Adapter {
         if(position < headers.size()){
             return Integer.MIN_VALUE + position;
         }
-        return super.getItemViewType(position);
+        return obtainViewType(position);
     }
+
+    public abstract int obtainViewType(int position);
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -66,26 +66,10 @@ public class HeaderAdapter extends RecyclerView.Adapter {
             View view = headers.valueAt(position);
             return new ViewHolder(view);
         }
-        View view = mInflater.inflate(R.layout.item_test, parent, false);
-        return new TestHolder(view);
+        return foundViewHolder(parent, viewType);
     }
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof TestHolder) {
-            ((TestHolder) holder).tvItem.setText(mSet.get(position).word);
-        }
-    }
-
-    private class TestHolder extends RecyclerView.ViewHolder{
-
-        TextView tvItem;
-
-        private TestHolder(View view){
-            super(view);
-            tvItem = (TextView)view.findViewById(R.id.item_text);
-        }
-    }
+    public abstract RecyclerView.ViewHolder foundViewHolder(ViewGroup parent, int viewType);
 
     private class ViewHolder extends RecyclerView.ViewHolder{
         private ViewHolder(View view){

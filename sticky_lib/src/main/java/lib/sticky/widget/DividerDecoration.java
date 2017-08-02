@@ -1,14 +1,14 @@
-package th.selection.widget;
+package lib.sticky.widget;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import th.selection.analysier.DataContainer;
-import th.selection.bean.FullWordEntity;
+import lib.sticky.analysier.DataContainer;
+import lib.sticky.bean.FullWordEntity;
+
 
 /**
  * Created by me_touch on 2017/7/28.

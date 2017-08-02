@@ -1,4 +1,4 @@
-package th.selection.spell;
+package lib.sticky.spell;
 
 import com.github.promeg.pinyinhelper.Pinyin;
 

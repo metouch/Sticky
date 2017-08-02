@@ -1,4 +1,4 @@
-package th.selection.widget;
+package lib.sticky.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -17,8 +17,8 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import th.selection.R;
-import th.selection.bean.IndexBean;
+import lib.sticky.R;
+import lib.sticky.bean.IndexBean;
 
 
 /**
@@ -88,7 +88,7 @@ public class IndexBar extends View {
         this.mListener = touchEventListener;
     }
 
-    public void setMData(List<th.selection.bean.IndexBean> data) {
+    public void setMData(List<IndexBean> data) {
         this.mData = data;
         if(currentItem == null && mData.size() > 0)
             currentItem = mData.get(0).firstSpell;

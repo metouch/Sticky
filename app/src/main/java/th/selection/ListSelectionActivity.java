@@ -19,12 +19,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import th.selection.adapter.HeaderAdapter;
-import th.selection.bean.IndexBean;
-import th.selection.widget.DividerDecoration;
-import th.selection.widget.IndexBar;
-import th.selection.analysier.DataContainer;
-import th.selection.widget.StickyTitleDecoration;
+import lib.sticky.analysier.DataContainer;
+import lib.sticky.bean.IndexBean;
+import lib.sticky.widget.DividerDecoration;
+import lib.sticky.widget.IndexBar;
+import lib.sticky.widget.StickyTitleDecoration;
+
 
 public class ListSelectionActivity extends AppCompatActivity implements IndexBar.TouchEventListener,
         StickyTitleDecoration.OnUpdateTitleListener{
@@ -35,7 +35,7 @@ public class ListSelectionActivity extends AppCompatActivity implements IndexBar
     TextView tvCharacter;
     RecyclerView mRecyclerView;
     LinearLayoutManager mManager;
-    HeaderAdapter mAdapter;
+    TestAdapter mAdapter;
     IndexBar indexBar;
     Runnable showIndex;
 
@@ -57,10 +57,10 @@ public class ListSelectionActivity extends AppCompatActivity implements IndexBar
                         return dict;
                     }
                 }));
-        container = new DataContainer(dict, mSet);
+        container = new DataContainer(mSet);
         tvCharacter = (TextView)findViewById(R.id.tv_character);
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-        mAdapter = new HeaderAdapter(this, container);
+        mAdapter = new TestAdapter(this, container);
         mRecyclerView.setAdapter(mAdapter);
         StickyTitleDecoration decoration = new StickyTitleDecoration(this, container.getDecorationSet());
         DividerDecoration dividerDecoration = new DividerDecoration.Builder()
@@ -114,28 +114,28 @@ public class ListSelectionActivity extends AppCompatActivity implements IndexBar
 //            }
 //        }, 10000);
 
-//        view.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-////                String[] arrays = getResources().getStringArray(R.array.cities);
-////                container.addData(Arrays.asList(arrays));
-//                View view1 = LayoutInflater.from(ListSelectionActivity.this).inflate(R.layout.item_test, mRecyclerView, false);
-//                View view2 = LayoutInflater.from(ListSelectionActivity.this).inflate(R.layout.item_test, mRecyclerView, false);
-//                mAdapter.addHeaderView(view1, "导航", "导");
-//                mAdapter.addHeaderView(view2, null, null);
-//                mAdapter.notifyDataSetChanged();
-//                indexBar.requestLayout();
-//                indexBar.invalidate();
-//            }
-//        }, 5000);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+//                String[] arrays = getResources().getStringArray(R.array.cities);
+//                container.addData(Arrays.asList(arrays));
+                View view1 = LayoutInflater.from(ListSelectionActivity.this).inflate(R.layout.item_test, mRecyclerView, false);
+                View view2 = LayoutInflater.from(ListSelectionActivity.this).inflate(R.layout.item_test, mRecyclerView, false);
+                mAdapter.addHeaderView(view1, "导航", "导");
+                mAdapter.addHeaderView(view2, null, null);
+                mAdapter.notifyDataSetChanged();
+                indexBar.requestLayout();
+                indexBar.invalidate();
+            }
+        }, 5000);
 
     }
 
-    public void addHeaderView(){
-        View view = LayoutInflater.from(this).inflate(R.layout.item_test, mRecyclerView, false);
-        mAdapter.addHeaderView(view);
-        container.updateIndexOffset(1);
-    }
+//    public void addHeaderView(){
+//        View view = LayoutInflater.from(this).inflate(R.layout.item_test, mRecyclerView, false);
+//        mAdapter.addHeaderView(view);
+//        container.updateIndexOffset(1);
+//    }
 
     @Override
     public void onDown(IndexBean bean) {
