@@ -31,7 +31,7 @@ public class ListSelectionActivity extends AppCompatActivity implements IndexBar
 
     String TAG = "TestActivity";
 
-    DataContainer container;
+    DataContainer<CityBean> container;
     TextView tvCharacter;
     RecyclerView mRecyclerView;
     LinearLayoutManager mManager;
@@ -39,13 +39,17 @@ public class ListSelectionActivity extends AppCompatActivity implements IndexBar
     IndexBar indexBar;
     Runnable showIndex;
 
-    private List<String> mSet;
+    private List<CityBean> mSet = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sample_index_bar);
         String[] arrays = getResources().getStringArray(R.array.cities);
-        mSet = new ArrayList<>(Arrays.asList(arrays));
+        List<String> cities = Arrays.asList(arrays);
+        int length = cities.size();
+        for(int i = 0; i < length; i ++){
+            mSet.add(new CityBean(i, cities.get(i)));
+        }
         final HashMap<String, String[]> dict = new HashMap<>();
         dict.put("重庆", new String[]{"CHONG", "QING"});
         dict.put("长沙", new String[]{"CHANG", "SHA"});
@@ -57,7 +61,7 @@ public class ListSelectionActivity extends AppCompatActivity implements IndexBar
                         return dict;
                     }
                 }));
-        container = new DataContainer(mSet);
+        container = new DataContainer<CityBean>(mSet);
         tvCharacter = (TextView)findViewById(R.id.tv_character);
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         mAdapter = new TestAdapter(this, container);
@@ -66,7 +70,7 @@ public class ListSelectionActivity extends AppCompatActivity implements IndexBar
         DividerDecoration dividerDecoration = new DividerDecoration.Builder()
                                                     .setColor(0xff000000)
                                                     .setHeight(3)
-                                                    .setContainer(container)
+                                                    .setContainer(container.getDecorationSet())
                                                     .setOffset(1)
                                                     .build();
         decoration.setTextColor(0xffff0000);
@@ -82,11 +86,11 @@ public class ListSelectionActivity extends AppCompatActivity implements IndexBar
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<String> list = new ArrayList<String>();
-                list.add("北京");
-                list.add("成都");
-                list.add("武汉");
-                list.add("淄博");
+                List<CityBean> list = new ArrayList<CityBean>();
+                list.add(new CityBean(0, "北京"));
+                list.add(new CityBean(0, "成都"));
+                list.add(new CityBean(0, "武汉"));
+                list.add(new CityBean(0, "淄博"));
 //                container.addData(list);
 //                addHeaderView();
                 container.addMiddleData(list, "重复", "☆", true);

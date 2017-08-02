@@ -6,8 +6,10 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import lib.sticky.analysier.DataContainer;
+import java.util.List;
+
 import lib.sticky.bean.FullWordEntity;
+import lib.sticky.spell.IWord2Spell;
 
 
 /**
@@ -15,7 +17,7 @@ import lib.sticky.bean.FullWordEntity;
  *
  */
 
-public class DividerDecoration extends RecyclerView.ItemDecoration{
+public class DividerDecoration<T extends IWord2Spell> extends RecyclerView.ItemDecoration{
     private int offset;
     private int height;
     private int color;
@@ -23,17 +25,13 @@ public class DividerDecoration extends RecyclerView.ItemDecoration{
     private Paint paint;
     private Rect mRect;
 
-    private DataContainer container;
-
-    public DividerDecoration(DataContainer container){
-
-    }
+    private List<FullWordEntity> mSet;
 
     public DividerDecoration(Builder builder){
         this.color = builder.color;
         this.offset = builder.offset;
         this.height = builder.height;
-        this.container = builder.container;
+        this.mSet = builder.mSet;
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(color);
@@ -50,8 +48,8 @@ public class DividerDecoration extends RecyclerView.ItemDecoration{
             View child = parent.getChildAt(i);
             int position = parent.getChildAdapterPosition(child);
             if(position < offset) continue;
-            if(position < 0 || position >= container.getDecorationSet().size()) return;
-            FullWordEntity entity = container.getDecorationSet().get(position);
+            if(position < 0 || position >= mSet.size()) return;
+            FullWordEntity entity = mSet.get(position);
             if(entity.isDifferentWithLast()) continue;
             RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams)child.getLayoutParams();
             mRect.bottom = child.getTop();
@@ -64,8 +62,8 @@ public class DividerDecoration extends RecyclerView.ItemDecoration{
         super.getItemOffsets(outRect, view, parent, state);
         RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams)view.getLayoutParams();
         int pos = lp.getViewAdapterPosition();
-        if(pos < 0 || pos > container.getDecorationSet().size() - 1) return;
-        if(!container.getDecorationSet().get(pos).isDifferentWithLast())
+        if(pos < 0 || pos > mSet.size() - 1) return;
+        if(!mSet.get(pos).isDifferentWithLast())
             outRect.set(0, height, 0, 0);
 
     }
@@ -76,12 +74,12 @@ public class DividerDecoration extends RecyclerView.ItemDecoration{
         c.drawRect(mRect, paint);
     }
 
-    public static class Builder{
+    public static class Builder<T extends IWord2Spell>{
 
         private int offset = 0;
         private int height = 1;
         private int color = 0xff999999;
-        private DataContainer container;
+        private List<FullWordEntity> mSet;
 
         public Builder setOffset(int offset){
             this.offset = offset;
@@ -98,8 +96,8 @@ public class DividerDecoration extends RecyclerView.ItemDecoration{
             return this;
         }
 
-        public Builder setContainer(DataContainer container) {
-            this.container = container;
+        public Builder setContainer(List<FullWordEntity> mSet) {
+            this.mSet = mSet;
             return this;
         }
 

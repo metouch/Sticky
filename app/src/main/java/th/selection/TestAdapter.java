@@ -15,11 +15,11 @@ import lib.sticky.analysier.DataContainer;
  *
  */
 
-public class TestAdapter extends HeaderAdapter{
+public class TestAdapter extends HeaderAdapter<CityBean>{
 
     private LayoutInflater mInflater;
 
-    public TestAdapter(Context context, DataContainer container){
+    public TestAdapter(Context context, DataContainer<CityBean> container){
         super(context, container);
         mInflater = LayoutInflater.from(context);
     }
@@ -38,7 +38,7 @@ public class TestAdapter extends HeaderAdapter{
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof TestHolder) {
-            ((TestHolder) holder).tvItem.setText(mSet.get(position).word);
+            ((TestHolder) holder).tvItem.setText(mSet.get(position).entity.getName());
         }
     }
 
