@@ -4,32 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <lib.sticky.widget.IndexBar
-        android:id="@+id/test_index"
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:background="#ccc"
-        app:textColor="#ff0000"
-        app:textSize="16sp"
-        android:layout_gravity="right|center_vertical"/>
+        >
 
-    <TextView
-        android:id="@+id/tv_character"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:textSize="24sp"
-        android:textColor="#ffffff"
-        android:background="@drawable/oval_character"
-        tools:text="A"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#999999"/>
 
+        <lib.sticky.widget.IndexBar
+            android:id="@+id/test_index"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center_vertical"
+            android:background="#ccc"
+            app:textColor="#ff0000"
+            app:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_character"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/oval_character"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="24sp"
+            tools:text="A" />
+
+    </FrameLayout>
 </FrameLayout>

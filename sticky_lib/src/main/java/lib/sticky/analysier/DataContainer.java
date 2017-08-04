@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import lib.sticky.bean.FullWordEntity;
+import lib.sticky.bean.FullEntity;
 import lib.sticky.bean.IndexBean;
 import lib.sticky.spell.IWord2Spell;
 
@@ -22,7 +22,7 @@ import lib.sticky.spell.IWord2Spell;
 
 public class DataContainer<T extends IWord2Spell> {
 
-    private List<FullWordEntity<T>> decorationSet;
+    private List<FullEntity<T>> decorationSet;
     private List<IndexBean> indexSet;
 
     private int indexOffset = 0;
@@ -64,30 +64,32 @@ public class DataContainer<T extends IWord2Spell> {
     public int addDecorationData(int start, @NonNull T entity) {
         for (int i = start; i < decorationSet.size(); i++) {
             String spell = entity.word2spell();
-            if (spell.compareTo(decorationSet.get(i).spell) <= 0) {
-                FullWordEntity<T> wordEntity = new FullWordEntity<T>(entity);
-                wordEntity.analysisSpell();
-                decorationSet.add(i, wordEntity);
+            if (spell.compareTo(decorationSet.get(i).spell) < 0) {
+                FullEntity<T> fullEntity = new FullEntity<T>(entity);
+                fullEntity.analysisSpell();
+                decorationSet.add(i, fullEntity);
+                if(i == start)
+                    fullEntity.setDifferentWithLast(true);
                 if (i - 1 >= start) {
-                    FullWordEntity<T> entity1 = decorationSet.get(i - 1);
-                    wordEntity.setDifferentWithLast(!wordEntity.firstSpell.equals(entity1.firstSpell));
+                    FullEntity<T> entity1 = decorationSet.get(i - 1);
+                    fullEntity.setDifferentWithLast(!fullEntity.firstSpell.equals(entity1.firstSpell));
                 }
                 if (i + 1 < decorationSet.size()) {
-                    FullWordEntity entity1 = decorationSet.get(i + 1);
-                    entity1.setDifferentWithLast(!wordEntity.firstSpell.equals(entity1.firstSpell));
+                    FullEntity entity1 = decorationSet.get(i + 1);
+                    entity1.setDifferentWithLast(!fullEntity.firstSpell.equals(entity1.firstSpell));
                 }
                 return i;
             }
         }
-        FullWordEntity<T> wordEntity = new FullWordEntity<T>(entity);
-        wordEntity.analysisSpell();
+        FullEntity<T> fullEntity = new FullEntity<T>(entity);
+        fullEntity.analysisSpell();
         if (decorationSet.size() == headDecorationCount + middleDecorationCount)
-            wordEntity.setDifferentWithLast(true);
+            fullEntity.setDifferentWithLast(true);
         else {
-            FullWordEntity wordEntity1 = decorationSet.get(decorationSet.size() - 1);
-            wordEntity.setDifferentWithLast(!wordEntity.firstSpell.equals(wordEntity1.firstSpell));
+            FullEntity fullEntity1 = decorationSet.get(decorationSet.size() - 1);
+            fullEntity.setDifferentWithLast(!fullEntity.firstSpell.equals(fullEntity1.firstSpell));
         }
-        decorationSet.add(wordEntity);
+        decorationSet.add(fullEntity);
         return decorationSet.size() - 1;
     }
 
@@ -122,12 +124,12 @@ public class DataContainer<T extends IWord2Spell> {
     public void addData(List<T> entities) {
         int startDecoration = headDecorationCount + middleDecorationCount;
         int startIndex = headIndexCount + middleIndexCount;
-        List<FullWordEntity<T>> spells = new ArrayList<>();
+        List<FullEntity<T>> spells = new ArrayList<>();
         for (int i = 0; i < entities.size(); i++) {
             T entity = entities.get(i);
-            FullWordEntity<T> wordEntity = new FullWordEntity<T>(entity);
-            wordEntity.analysisSpell();
-            spells.add(wordEntity);
+            FullEntity<T> fullEntity = new FullEntity<T>(entity);
+            fullEntity.analysisSpell();
+            spells.add(fullEntity);
         }
         Collections.sort(spells);
         for (int i = 0; i < entities.size(); i++) {
@@ -147,13 +149,13 @@ public class DataContainer<T extends IWord2Spell> {
      */
     public void addMiddleData(@NonNull T entity, @NonNull String decorationFirstSpell,
                               @NonNull String index, boolean showDecoration) {
-        FullWordEntity<T> wordEntity = new FullWordEntity<T>(entity);
-        wordEntity.analysisSpell();
-        wordEntity.text = showDecoration ? decorationFirstSpell : null;
-        wordEntity.setDifferentWithLast(showDecoration);
-        wordEntity.firstSpell = index;
-        decorationSet.add(headDecorationCount, wordEntity);
-        offsetIndexPosition(1);
+        FullEntity<T> fullEntity = new FullEntity<T>(entity);
+        fullEntity.analysisSpell();
+        fullEntity.text = showDecoration ? decorationFirstSpell : null;
+        fullEntity.setDifferentWithLast(showDecoration);
+        fullEntity.firstSpell = index;
+        decorationSet.add(headDecorationCount, fullEntity);
+        offsetIndexPosition(headIndexCount, 1);
         int position = headDecorationCount;
         indexSet.add(headIndexCount, new IndexBean(index, position));
         middleDecorationCount ++;
@@ -172,14 +174,14 @@ public class DataContainer<T extends IWord2Spell> {
                               @NonNull String index, boolean showDecoration) {
         if (entities.isEmpty()) return;
         for (int i = entities.size() - 1; i >= 0; i--) {
-            FullWordEntity<T> wordEntity = new FullWordEntity<T>(entities.get(i));
-            wordEntity.analysisSpell();
-            wordEntity.text = showDecoration ? decorationFirstSpell : null;
-            wordEntity.setDifferentWithLast(i == 0 && showDecoration);
-            wordEntity.firstSpell = index;
-            decorationSet.add(headDecorationCount, wordEntity);
+            FullEntity<T> fullEntity = new FullEntity<T>(entities.get(i));
+            fullEntity.analysisSpell();
+            fullEntity.text = showDecoration ? decorationFirstSpell : null;
+            fullEntity.setDifferentWithLast(i == 0 && showDecoration);
+            fullEntity.firstSpell = index;
+            decorationSet.add(headDecorationCount, fullEntity);
         }
-        offsetIndexPosition(entities.size());
+        offsetIndexPosition(headIndexCount, entities.size());
         int position = headDecorationCount;
         indexSet.add(headIndexCount, new IndexBean(index, position));
         middleDecorationCount += entities.size();
@@ -187,19 +189,19 @@ public class DataContainer<T extends IWord2Spell> {
     }
 
     /**
-     * @param word
-     *
+     * @param word 分段标题
+     *@param index 索引文字
      */
     public void addHeaderData(String word, String index) {
-        FullWordEntity<T> wordEntity = new FullWordEntity<T>(word, index);
-        wordEntity.setText(word);
-        wordEntity.setDifferentWithLast(word != null && !word.isEmpty());
-        decorationSet.add(0, wordEntity);
+        FullEntity<T> fullEntity = new FullEntity<T>(word, index);
+        fullEntity.setText(word);
+        fullEntity.setDifferentWithLast(word != null && !word.isEmpty());
+        decorationSet.add(headDecorationCount, fullEntity);
         offsetIndexPosition(1);
-        if(word == null || word.isEmpty()) return;
-        indexSet.add(0, new IndexBean(index, 0));
-        headIndexCount++;
         headDecorationCount++;
+        if(word == null || word.isEmpty()) return;
+        indexSet.add(headIndexCount, new IndexBean(index, 0));
+        headIndexCount++;
     }
 
 
@@ -222,7 +224,7 @@ public class DataContainer<T extends IWord2Spell> {
         return indexOffset;
     }
 
-    public List<FullWordEntity<T>> getDecorationSet() {
+    public List<FullEntity<T>> getDecorationSet() {
         return decorationSet;
     }
 

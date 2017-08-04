@@ -7,7 +7,7 @@ import lib.sticky.spell.IWord2Spell;
  *
  */
 
-public class FullWordEntity<T extends IWord2Spell> implements Comparable<FullWordEntity>{
+public class FullEntity<T extends IWord2Spell> implements Comparable<FullEntity>{
 
     public T entity;
     public String spell;
@@ -17,21 +17,21 @@ public class FullWordEntity<T extends IWord2Spell> implements Comparable<FullWor
     public String text;
     private boolean differentWithLast = false; //区分与上一个数据的首字母是否相同
 
-    public FullWordEntity(T entity){
+    public FullEntity(T entity){
         this.entity = entity;
     }
 
-    public FullWordEntity(String spell){
+    public FullEntity(String spell){
         this.spell = spell;
         this.text = firstSpell = spell.substring(0, 1);
     }
 
-    public FullWordEntity(String spell, String firstSpell){
+    public FullEntity(String spell, String firstSpell){
         this.spell = spell;
         this.text = this.firstSpell = firstSpell;
     }
 
-    public FullWordEntity(T t, String spell, String firstSpell){
+    public FullEntity(T t, String spell, String firstSpell){
         this.entity = t;
         this.spell = spell;
         this.text = this.firstSpell = firstSpell;
@@ -54,7 +54,7 @@ public class FullWordEntity<T extends IWord2Spell> implements Comparable<FullWor
     }
 
     @Override
-    public int compareTo(FullWordEntity o) {
+    public int compareTo(FullEntity o) {
         return spell.compareTo(o.spell);
     }
 

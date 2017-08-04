@@ -66,10 +66,12 @@ public class ListSelectionActivity extends AppCompatActivity implements IndexBar
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         mAdapter = new TestAdapter(this, container);
         mRecyclerView.setAdapter(mAdapter);
-        StickyTitleDecoration decoration = new StickyTitleDecoration(this, container.getDecorationSet());
-        DividerDecoration dividerDecoration = new DividerDecoration.Builder()
+        StickyTitleDecoration<CityBean> decoration =
+                new StickyTitleDecoration<>(this, container.getDecorationSet());
+        DividerDecoration<CityBean> dividerDecoration = new DividerDecoration.Builder<CityBean>()
+                                                    .setContext(this)
                                                     .setColor(0xff000000)
-                                                    .setHeight(3)
+                                                    .setHeight(1)
                                                     .setContainer(container.getDecorationSet())
                                                     .setOffset(1)
                                                     .build();
@@ -88,18 +90,37 @@ public class ListSelectionActivity extends AppCompatActivity implements IndexBar
             public void run() {
                 List<CityBean> list = new ArrayList<CityBean>();
                 list.add(new CityBean(0, "北京"));
-                list.add(new CityBean(0, "成都"));
+                list.add(new CityBean(0, "日本"));
                 list.add(new CityBean(0, "武汉"));
                 list.add(new CityBean(0, "淄博"));
 //                container.addData(list);
 //                addHeaderView();
-                container.addMiddleData(list, "重复", "☆", true);
+                container.addMiddleData(list, "重复", "☆", false);
                // container.addData(list);
                 mAdapter.notifyDataSetChanged();
                 indexBar.requestLayout();
                 indexBar.invalidate();
             }
-        }, 5000);
+        }, 10000);
+
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                List<CityBean> list = new ArrayList<CityBean>();
+                list.add(new CityBean(0, "啊啊"));
+                list.add(new CityBean(0, "日本"));
+                list.add(new CityBean(0, "武汉"));
+                list.add(new CityBean(0, "淄博"));
+                container.addData(list);
+//                addHeaderView();
+//                container.addMiddleData(list, "重复", "☆", true);
+                // container.addData(list);
+                mAdapter.notifyDataSetChanged();
+                indexBar.requestLayout();
+                indexBar.invalidate();
+            }
+        }, 15000);
+
 //        view.postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
@@ -126,10 +147,12 @@ public class ListSelectionActivity extends AppCompatActivity implements IndexBar
                 View view1 = LayoutInflater.from(ListSelectionActivity.this).inflate(R.layout.item_test, mRecyclerView, false);
                 View view2 = LayoutInflater.from(ListSelectionActivity.this).inflate(R.layout.item_test, mRecyclerView, false);
                 mAdapter.addHeaderView(view1, "导航", "导");
-                mAdapter.addHeaderView(view2, null, null);
+                mAdapter.addHeaderView(view2, "定位", "定");
                 mAdapter.notifyDataSetChanged();
+                indexBar.setCurrentItem(null);
                 indexBar.requestLayout();
-                indexBar.invalidate();
+
+                //indexBar.invalidate();
             }
         }, 5000);
 

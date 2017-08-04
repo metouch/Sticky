@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import lib.sticky.analysier.DataContainer;
-import lib.sticky.bean.FullWordEntity;
+import lib.sticky.bean.FullEntity;
 import lib.sticky.spell.IWord2Spell;
 
 
@@ -23,7 +23,7 @@ public abstract class HeaderAdapter<T extends IWord2Spell> extends RecyclerView.
 
     private LayoutInflater mInflater;
     private DataContainer<T> container;
-    protected List<FullWordEntity<T>> mSet;
+    protected List<FullEntity<T>> mSet;
     private SparseArray<View> headers = new SparseArray<>();
 
     private int headerStart = Integer.MIN_VALUE;

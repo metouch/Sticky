@@ -5,12 +5,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 
 import java.util.List;
 
-import lib.sticky.bean.FullWordEntity;
+import lib.sticky.bean.FullEntity;
 import lib.sticky.spell.IWord2Spell;
 
 
@@ -25,41 +26,44 @@ public class StickyTitleDecoration<T extends IWord2Spell> extends RecyclerView.I
     private int INVALID_POSITION = -1;
 
     private Context context;
+    private DisplayMetrics displayMetrics;
     private Paint mPaint;
     private Paint.FontMetrics metrics;
     private Rect mRect;
     private OnUpdateTitleListener mListener;
     private int textColor = 0xffffffff; //必须是32位
     private int bgColor = 0xff999999;
-    private int height = 120;
+    private int height = 40;
     private int textSize = 14;
-    private List<FullWordEntity> mSet;
+    private List<FullEntity<T>> mSet;
 
-    public StickyTitleDecoration(Context context, List<FullWordEntity> mSet){
+    public StickyTitleDecoration(Context context, List<FullEntity<T>> mSet){
         this.context = context;
         this.mSet = mSet;
+        displayMetrics = context.getResources().getDisplayMetrics();
         metrics = new Paint.FontMetrics();
-        textSize = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP
-                , textSize, context.getResources().getDisplayMetrics());
+        textSize = pxConversion(textSize, TypedValue.COMPLEX_UNIT_SP);
+        height = pxConversion(height, TypedValue.COMPLEX_UNIT_DIP);
         initPaint();
         mRect = new Rect();
     }
 
     public void setTextColor(int textColor) {
         this.textColor = textColor;
+        updatePaint();
     }
 
     public void setHeight(int height) {
-        this.height = height;
+        this.height = pxConversion(height, TypedValue.COMPLEX_UNIT_DIP);
     }
 
     public void setBgColor(int bgColor) {
         this.bgColor = bgColor;
+        updatePaint();
     }
 
     public void setTextSize(int textSize){
-        this.textSize = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP
-                , textSize, context.getResources().getDisplayMetrics());
+        this.textSize = pxConversion(textSize, TypedValue.COMPLEX_UNIT_SP);
         updatePaint();
     }
 
@@ -147,6 +151,10 @@ public class StickyTitleDecoration<T extends IWord2Spell> extends RecyclerView.I
         mPaint.getFontMetrics(metrics);
         float y = (mRect.top + mRect.bottom - metrics.bottom - metrics.top) / 2;
         c.drawText(text, mRect.left, y, mPaint);
+    }
+
+    private int pxConversion(int value, int unit){
+        return (int)TypedValue.applyDimension(unit, value, displayMetrics);
     }
 
     private void drawStickyDecoration(RecyclerView parent, Canvas c, String text, int offset){

@@ -96,7 +96,6 @@ public class IndexBar extends View {
     }
 
     public void setCurrentItem(String currentItem) {
-        if(currentItem == null || currentItem.equals(this.currentItem)) return;
         this.currentItem = currentItem;
         invalidate();
     }
@@ -124,7 +123,7 @@ public class IndexBar extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.e(TAG, "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+        if(mData == null) return;
         String index;
         float height = 0;
         canvas.save();
@@ -194,6 +193,7 @@ public class IndexBar extends View {
         if(wMode == MeasureSpec.EXACTLY){
             result = wSize;
         } else {
+            if(mData == null) return 0;
             for(int i = 0; i < mData.size(); i ++){
                 int width = (int)mPaint.measureText(mData.get(i).firstSpell);
                 result = Math.max(width, result);
@@ -228,6 +228,7 @@ public class IndexBar extends View {
             }
             result = hSize;
         }else if(hMode == MeasureSpec.AT_MOST){
+            if(mData == null) return result;
             result += mData.size() - 1 > 0 ? (mData.size() - 1) * textSpacing : 0;
             return Math.min(result, hSize);
         }

@@ -2,6 +2,7 @@ package th.selection;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class TestAdapter extends HeaderAdapter<CityBean>{
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof TestHolder) {
+            Log.e("TestAdapter", "position = " + position);
             ((TestHolder) holder).tvItem.setText(mSet.get(position).entity.getName());
         }
     }
