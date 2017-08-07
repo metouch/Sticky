@@ -35,6 +35,7 @@ public class StickyTitleDecoration<T extends IWord2Spell> extends RecyclerView.I
     private int bgColor = 0xff999999;
     private int height = 40;
     private int textSize = 14;
+    private int paddingLeft = 0; //unit:dp
     private List<FullEntity<T>> mSet;
 
     public StickyTitleDecoration(Context context, List<FullEntity<T>> mSet){
@@ -67,6 +68,10 @@ public class StickyTitleDecoration<T extends IWord2Spell> extends RecyclerView.I
         updatePaint();
     }
 
+    public void setPaddingLeft(int paddingLeft) {
+        this.paddingLeft = paddingLeft;
+    }
+
     public void setMListener(OnUpdateTitleListener mListener) {
         this.mListener = mListener;
     }
@@ -75,8 +80,8 @@ public class StickyTitleDecoration<T extends IWord2Spell> extends RecyclerView.I
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         if(mSet == null || mSet.size() < 1)
             return;
-        mRect.left = parent.getPaddingLeft();
-        mRect.right = parent.getWidth() - parent.getPaddingRight();
+        mRect.left = parent.getLeft() + parent.getPaddingLeft();;
+        mRect.right = parent.getRight() - parent.getPaddingRight();
         int childCount = parent.getChildCount();
         int lastPosition = INVALID_POSITION;
         for(int i = 0; i < childCount; i++){
@@ -114,7 +119,8 @@ public class StickyTitleDecoration<T extends IWord2Spell> extends RecyclerView.I
                 offset = height - child.getBottom();
             }
         }
-        drawStickyDecoration(parent, c, mSet.get(position).text, offset);
+        String text = mSet.get(position).text;
+        drawStickyDecoration(parent, c, text, offset);
         if(mListener != null)
             mListener.updateTitle(mSet.get(position).firstSpell);
         super.onDrawOver(c, parent, state);
@@ -150,7 +156,7 @@ public class StickyTitleDecoration<T extends IWord2Spell> extends RecyclerView.I
         mPaint.setColor(textColor);
         mPaint.getFontMetrics(metrics);
         float y = (mRect.top + mRect.bottom - metrics.bottom - metrics.top) / 2;
-        c.drawText(text, mRect.left, y, mPaint);
+        c.drawText(text, mRect.left + pxConversion(paddingLeft, TypedValue.COMPLEX_UNIT_DIP), y, mPaint);
     }
 
     private int pxConversion(int value, int unit){
@@ -166,7 +172,7 @@ public class StickyTitleDecoration<T extends IWord2Spell> extends RecyclerView.I
         mPaint.setColor(textColor);
         mPaint.getFontMetrics(metrics);
         float y = (mRect.top + mRect.bottom - metrics.bottom - metrics.top) / 2;
-        c.drawText(text, mRect.left, y, mPaint);
+        c.drawText(text, mRect.left + pxConversion(paddingLeft, TypedValue.COMPLEX_UNIT_DIP), y, mPaint);
     }
 
     public interface OnUpdateTitleListener{

@@ -3,6 +3,9 @@
     android:id="@+id/child_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minWidth="60dp"
-    android:padding="10dp"
-    android:layout_margin="20dp"/>
+    android:background="#ffffff"
+    android:minHeight="36dp"
+    android:layout_marginLeft="10dp"
+    android:gravity="center"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"/>

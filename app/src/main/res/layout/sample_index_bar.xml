@@ -12,8 +12,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#999999"/>
+            android:layout_height="match_parent" />
 
         <lib.sticky.widget.IndexBar
             android:id="@+id/test_index"
@@ -33,7 +32,8 @@
             android:gravity="center"
             android:textColor="#ffffff"
             android:textSize="24sp"
-            tools:text="A" />
+            tools:text="A"
+            android:visibility="gone"/>
 
     </FrameLayout>
 </FrameLayout>

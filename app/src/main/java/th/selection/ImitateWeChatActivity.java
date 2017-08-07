@@ -27,7 +27,7 @@ import lib.sticky.widget.IndexBar;
 import lib.sticky.widget.StickyTitleDecoration;
 
 
-public class ImitateMeiTuanActivity extends AppCompatActivity implements IndexBar.TouchEventListener,
+public class ImitateWeChatActivity extends AppCompatActivity implements IndexBar.TouchEventListener,
         StickyTitleDecoration.OnUpdateTitleListener{
 
     String TAG = "TestActivity";
@@ -40,6 +40,7 @@ public class ImitateMeiTuanActivity extends AppCompatActivity implements IndexBa
     TestAdapter mAdapter;
     IndexBar indexBar;
     Runnable showIndex;
+    boolean ignored = true; //忽略因为界面重绘导致的tvCharacter显示
 
     private List<CityBean> mSet = new ArrayList<>();
     @Override
@@ -76,64 +77,44 @@ public class ImitateMeiTuanActivity extends AppCompatActivity implements IndexBa
         indexBar = (IndexBar)findViewById(R.id.test_index);
         indexBar.setTouchEventListener(this);
         indexBar.setMData(container.getIndexSet());
-        loadHeader();
+        loadBodyData();
     }
 
 
-    private void lazyLoadHeadData(){
+    private void lazyLoadMiddleData(){
         mRecyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                loadHeadData();
+                loadMiddleData();
             }
         }, 6000);
     }
 
-    private void loadHeader(){
-        View view = LayoutInflater.from(this).inflate(R.layout.item_text, mRecyclerView, false);
-        mAdapter.addHeaderView(view, null, null);
+    private void loadMiddleData2(){
+        List<CityBean> beans = new ArrayList<>();
+        beans.add(new CityBean(0, "知乎"));
+        beans.add(new CityBean(0, "沪指"));
+        beans.add(new CityBean(0, "联系"));
+        container.addMiddleData(beans, "乱写", "↑", false);
     }
 
-    private void loadHeadData(){
+    private void loadMiddleData(){
         List<CityBean> beans = new ArrayList<>();
         beans.add(new CityBean(0, "北京"));
         beans.add(new CityBean(0, "上海"));
         beans.add(new CityBean(0, "广州"));
         beans.add(new CityBean(0, "深圳"));
         beans.add(new CityBean(0, "杭州"));
-        View headView = LayoutInflater.from(this).inflate(R.layout.item_recyclerview, mRecyclerView, false);
-        RecyclerView recyclerView = (RecyclerView) headView.findViewById(R.id.recycler_view);
-        GridAdapter adapter = new GridAdapter(this, beans);
-        recyclerView.setAdapter(adapter);
-        GridLayoutManager manager = new GridLayoutManager(this, 3);
-        recyclerView.setLayoutManager(manager);
-        mAdapter.addHeaderView(headView, "最近", "热门");
+        container.addMiddleData(beans, "热门", "☆", true);
     }
 
-    private void loadHeadData2(){
-        final List<CityBean> beans = new ArrayList<>();
-        View headView2 = LayoutInflater.from(this).inflate(R.layout.item_recyclerview, mRecyclerView, false);
-        RecyclerView recyclerView = (RecyclerView) headView2.findViewById(R.id.recycler_view);
-        final GridAdapter adapter = new GridAdapter(this, beans);
-        recyclerView.setAdapter(adapter);
-        GridLayoutManager manager = new GridLayoutManager(this, 3);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                beans.add(new CityBean(100, "北京"));
-                adapter.notifyItemRangeInserted(0, 1);
-            }
-        }, 1000);
-        mAdapter.addHeaderView(headView2, "定位", "定位");
-    }
     private void lazyLoadBodyData(){
         mRecyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                loadBodyData();
-                loadHeadData2();
-                loadHeadData();
+                //loadBodyData();
+                loadMiddleData();
+                loadMiddleData2();
                 invalidate();
             }
         }, 5000);
@@ -165,6 +146,7 @@ public class ImitateMeiTuanActivity extends AppCompatActivity implements IndexBa
         mAdapter.notifyDataSetChanged();
         indexBar.requestLayout();
         indexBar.invalidate();
+        ignored = true;
     }
 
     @Override
@@ -172,29 +154,28 @@ public class ImitateMeiTuanActivity extends AppCompatActivity implements IndexBa
         Log.e(TAG, "mRecyclerView.getHeight() = " + mRecyclerView.getHeight());
         Log.w(TAG, "s = " + bean.toString());
         mManager.scrollToPositionWithOffset(bean.position + container.getIndexOffset(), 0);
-        tvCharacter.setVisibility(View.VISIBLE);
-        tvCharacter.setText(bean.firstSpell);
+        //tvCharacter.setVisibility(View.VISIBLE);
+        //tvCharacter.setText(bean.firstSpell);
     }
 
     @Override
     public void onChanged(IndexBean last, IndexBean current) {
         Log.w(TAG, "last = " + last.toString() + ", current = " + current.toString());
         mManager.scrollToPositionWithOffset(current.position + container.getIndexOffset(), 0);
-        tvCharacter.setText(current.firstSpell);
+        //tvCharacter.setText(current.firstSpell);
     }
 
     @Override
     public void onUp(IndexBean last, IndexBean current) {
         if(last == null) return;
         Log.w(TAG, "up, last = " + last.toString());
-        tvCharacter.setVisibility(View.GONE);
+        //tvCharacter.setVisibility(View.GONE);
     }
 
     @Override
     public void updateTitle(String title) {
         if(!TextUtils.isEmpty(title)){
             indexBar.setCurrentItem(title);
-            controlIndex(title);
         }
     }
 

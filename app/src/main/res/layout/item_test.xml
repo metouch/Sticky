@@ -11,5 +11,6 @@
         android:textSize="16sp"
         android:textColor="#ff00ff"
         android:layout_gravity="center_vertical"
-        android:text="从以下列表中选择城市" />
+        android:text="从以下列表中选择城市"
+        android:paddingLeft="10dp"/>
 </FrameLayout>

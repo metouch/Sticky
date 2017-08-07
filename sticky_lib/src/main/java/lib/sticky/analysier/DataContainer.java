@@ -191,16 +191,18 @@ public class DataContainer<T extends IWord2Spell> {
     /**
      * @param word 分段标题
      *@param index 索引文字
+     * 如果 word == null && index == null 则表示偏移所有index数据
      */
     public void addHeaderData(String word, String index) {
         FullEntity<T> fullEntity = new FullEntity<T>(word, index);
         fullEntity.setText(word);
         fullEntity.setDifferentWithLast(word != null && !word.isEmpty());
         decorationSet.add(headDecorationCount, fullEntity);
-        offsetIndexPosition(1);
+        int start = word == null && index == null ? 0 : headIndexCount;
+        offsetIndexPosition(headIndexCount, 1);
         headDecorationCount++;
         if(word == null || word.isEmpty()) return;
-        indexSet.add(headIndexCount, new IndexBean(index, 0));
+        indexSet.add(headIndexCount, new IndexBean(index, headDecorationCount - 1));
         headIndexCount++;
     }
 
