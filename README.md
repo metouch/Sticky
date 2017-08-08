@@ -24,26 +24,28 @@ word 与 index值均不为null
 
 第三个是具有与body部分的item相同item，单索引是特殊字符的部分，对应的API为DataContainer.class
 
+`/**`
+
+` *插入一个middle数据`
+
+` *@param entity               待插入middle数据`
+
+` *@param decorationFirstSpell 分类行显示的文字`
+
+` *param index                导航栏显示文字`
+
+` *param showDecoration 是否显示分隔栏`
+
+` */`
+
+` public void addMiddleData(@NonNull T entity, @NonNull String decorationFirstSpell，@NonNull String index, boolean showDecoration)`
+
 第四部分是主干区，对应的API为DataContainer.class
-  ` //添加body部分数据
-    public void addData(List<T> entities) {
-        int startDecoration = headDecorationCount + middleDecorationCount;
-        int startIndex = headIndexCount + middleIndexCount;
-        List<FullEntity<T>> spells = new ArrayList<>();
-        for (int i = 0; i < entities.size(); i++) {
-            T entity = entities.get(i);
-            FullEntity<T> fullEntity = new FullEntity<T>(entity);
-            fullEntity.analysisSpell();
-            spells.add(fullEntity);
-        }
-        Collections.sort(spells);
-        for (int i = 0; i < entities.size(); i++) {
-            String spell = spells.get(i).spell;
-            startDecoration = addDecorationData(startDecoration, spells.get(i).entity);
-            startIndex = addIndexData(startIndex, spell.substring(0, 1), startDecoration);
-        }
-    }`
-                                            
+
+`//添加body部分数据`
+
+ `public void addData(List<T> entities)`
+                                    
 ### 使用方式
 
 参考sample
