@@ -40,6 +40,13 @@ public abstract class HeaderAdapter<T extends IWord2Spell> extends RecyclerView.
         headerStart++;
     }
 
+    /**
+     *
+     * @param view 待添加的头部View
+     * @param word decoration的显示字符
+     * @param index 索引的显示字符
+     * 当word与index为null时，则不添加进索引，作为单独的头部存在
+     */
     public void addHeaderView(View view, String word, String index){
         addHeaderView(view);
         container.addHeaderData(word, index);
