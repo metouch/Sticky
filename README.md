@@ -24,20 +24,8 @@ word 与 index值均不为null
 
 第三个是具有与body部分的item相同item，单索引是特殊字符的部分，对应的API为DataContainer.class
 
-`   /**
-     * 插入一组middle数据，
-     *
-     * @param entities               待插入middle数据
-     * @param decorationFirstSpell 分类行显示的文字
-     * @param index                导航栏显示文字
-     * @param showDecoration 是否显示分隔栏
-     */
-    public void addMiddleData(@NonNull List<T> entities, @NonNull String decorationFirstSpell,
-                              @NonNull String index, boolean showDecoration)`
-                              
 第四部分是主干区，对应的API为DataContainer.class
-
-·   //添加body部分数据
+  ` //添加body部分数据
     public void addData(List<T> entities) {
         int startDecoration = headDecorationCount + middleDecorationCount;
         int startIndex = headIndexCount + middleIndexCount;
@@ -54,7 +42,7 @@ word 与 index值均不为null
             startDecoration = addDecorationData(startDecoration, spells.get(i).entity);
             startIndex = addIndexData(startIndex, spell.substring(0, 1), startDecoration);
         }
-    }·
+    }`
                                             
 ### 使用方式
 
